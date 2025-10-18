@@ -970,42 +970,76 @@
             <div class="container">
                 <h2>About Kerala TechConnect</h2>
                 <div class="about-content">
-                    <p>Kerala TechConnect is an innovative platform designed to centralize and streamline the discovery and management of tech events across Kerala's college communities.</p>
+                    <div class="about-text">
+                        <p>Kerala TechConnect is your gateway to the vibrant tech ecosystem across Kerala's college communities. Our platform serves as a centralized hub for discovering, organizing, and participating in technology events that shape the future of innovation in Kerala.</p>
+                        <p>Our mission is to connect students, developers, organizations, and tech enthusiasts, fostering collaboration and knowledge sharing through various events including hackathons, workshops, meetups, and conferences.</p>
+                    </div>
                     
-                    <h3>Development Team</h3>
-                    <p>This platform was developed by:</p>
-                    
+                    <h3 style="text-align: center; margin-top: 40px;">Our Development Team</h3>
                     <div class="developers-grid">
                         <div class="developer-card">
                             <div class="developer-icon">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-user-circle"></i>
                             </div>
                             <h3>Rohan Stephen George</h3>
-                            <p>Full Stack Developer</p>
+                            <p class="roll-number">SCM23CS216</p>
+                            <p class="role">Lead Developer</p>
                         </div>
                         
                         <div class="developer-card">
                             <div class="developer-icon">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-user-circle"></i>
                             </div>
                             <h3>Ronin Antony AJ</h3>
-                            <p>Backend Developer</p>
+                            <p class="roll-number">SCM23CS217</p>
+                            <p class="role">Backend Developer</p>
                         </div>
                         
                         <div class="developer-card">
                             <div class="developer-icon">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-user-circle"></i>
                             </div>
                             <h3>Sarandev C</h3>
-                            <p>Frontend Developer</p>
+                            <p class="roll-number">SCM23CS231</p>
+                            <p class="role">Frontend Developer</p>
                         </div>
                         
                         <div class="developer-card">
                             <div class="developer-icon">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-user-circle"></i>
                             </div>
                             <h3>Sharon S Varghese</h3>
-                            <p>UI/UX Designer</p>
+                            <p class="roll-number">SCM23CS237</p>
+                            <p class="role">UI/UX Developer</p>
+                        </div>
+                    </div>
+
+                    <div class="about-features" style="margin-top: 60px;">
+                        <h3 style="text-align: center; margin-bottom: 30px;">Platform Features</h3>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <h3>Event Management</h3>
+                                <p>Comprehensive tools for event creation, registration, and attendance tracking.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h3>Community Building</h3>
+                                <p>Connect with like-minded individuals and grow your professional network.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3>Analytics</h3>
+                                <p>Track event performance and participant engagement with detailed analytics.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1162,4 +1196,168 @@
                         <textarea id="eventDescription" class="form-control" rows="4" placeholder="Describe your event" required></textarea>
                     </div>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="eventDate">Event Date</label>
+                            <input type="date" id="eventDate" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventTime">Event Time</label>
+                            <input type="time" id="eventTime" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventLocation">Location</label>
+                        <input type="text" id="eventLocation" class="form-control" placeholder="Enter event location" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventType">Event Type</label>
+                        <select id="eventType" class="form-control" required>
+                            <option value="">Select event type</option>
+                            <option value="hackathon">Hackathon</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="meetup">Meetup</option>
+                            <option value="conference">Conference</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventImage">Event Image</label>
+                        <input type="file" id="eventImage" class="form-control" accept="image/*" required>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Create Event</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page-container">
+        <section class="about-section" style="padding-top: 60px;">
+            <div class="container">
+                <h2>About Kerala TechConnect</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Kerala TechConnect is your gateway to the vibrant tech ecosystem across Kerala's college communities. Our platform serves as a centralized hub for discovering, organizing, and participating in technology events that shape the future of innovation in Kerala.</p>
+                        <p>Our mission is to connect students, developers, organizations, and tech enthusiasts, fostering collaboration and knowledge sharing through various events including hackathons, workshops, meetups, and conferences.</p>
+                    </div>
+                    
+                    <h3 style="text-align: center; margin-top: 40px;">Our Development Team</h3>
+                    <div class="developers-grid">
+                        <div class="developer-card">
+                            <div class="developer-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <h3>Rohan Stephen George</h3>
+                            <p class="roll-number">SCM23CS216</p>
+                            <p class="role">Lead Developer</p>
+                        </div>
+                        
+                        <div class="developer-card">
+                            <div class="developer-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <h3>Ronin Antony AJ</h3>
+                            <p class="roll-number">SCM23CS217</p>
+                            <p class="role">Backend Developer</p>
+                        </div>
+                        
+                        <div class="developer-card">
+                            <div class="developer-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <h3>Sarandev C</h3>
+                            <p class="roll-number">SCM23CS231</p>
+                            <p class="role">Frontend Developer</p>
+                        </div>
+                        
+                        <div class="developer-card">
+                            <div class="developer-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <h3>Sharon S Varghese</h3>
+                            <p class="roll-number">SCM23CS237</p>
+                            <p class="role">UI/UX Developer</p>
+                        </div>
+                    </div>
+
+                    <div class="about-features" style="margin-top: 60px;">
+                        <h3 style="text-align: center; margin-bottom: 30px;">Platform Features</h3>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <h3>Event Management</h3>
+                                <p>Comprehensive tools for event creation, registration, and attendance tracking.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h3>Community Building</h3>
+                                <p>Connect with like-minded individuals and grow your professional network.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3>Analytics</h3>
+                                <p>Track event performance and participant engagement with detailed analytics.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Page navigation
+        function showPage(page) {
+            const pages = document.querySelectorAll('.page-container');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            document.getElementById(page).classList.add('active');
+        }
+
+        // Show event detail (dummy function)
+        function showEventDetail(eventId) {
+            // Here you would typically fetch and display the event details
+            // For now, we'll just show an alert
+            alert('Show details for event ID: ' + eventId);
+        }
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Perform login (this is just a placeholder, implement actual login logic)
+            alert('Logging in...');
+            showPage('dashboard');
+        });
+
+        // Handle signup form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Perform signup (this is just a placeholder, implement actual signup logic)
+            alert('Signing up...');
+            showPage('login');
+        });
+
+        // Handle create event form submission
+        document.getElementById('createEventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Perform event creation (this is just a placeholder, implement actual event creation logic)
+            alert('Event created!');
+            showPage('dashboard');
+        });
+    </script>
+</body>
+</html>
