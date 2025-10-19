@@ -197,7 +197,7 @@
 
         .auth-buttons .btn-outline:hover {
             background: var(--primary);
-            color: var,--dark);
+            color: var(--dark);
         }
 
         .mobile-menu {
@@ -392,7 +392,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         .hero h1 {
@@ -918,6 +918,49 @@
         .modal-body {
             color: var(--light);
         }
+
+        /* Add this CSS for the modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--dark-slate);
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            color: var(--light);
+        }
     </style>
 </head>
 <body>
@@ -957,8 +1000,8 @@
                 <h1>Centralized Platform for Kerala's Tech Events</h1>
                 <p>Discover, participate, and manage tech events across Kerala's college communities. Connect with the vibrant tech ecosystem through hackathons, workshops, and meetups.</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn" onclick="showPage('events')">Explore Events</a>
-                    <a href="#" class="btn btn-outline" onclick="showPage('create-event')">Organize Event</a>
+                    <button onclick="window.location.href='#events'; showPage('events')" class="btn">Explore Events</button>
+                    <button onclick="window.location.href='#create-event'; showPage('create-event')" class="btn btn-outline">Organize Event</button>
                 </div>
             </div>
         </section>
@@ -1510,10 +1553,10 @@
                 </div>
 
                 <div class="dashboard-actions">
-                    <a href="#" class="btn" onclick="showPage('create-event')">Create New Event</a>
-                    <a href="#" class="btn btn-outline" data-feature="showMyRegistrations">My Registrations</a>
-                    <a href="#" class="btn btn-outline" data-feature="showEventAnalytics">Event Analytics</a>
-                 </div>
+                    <button onclick="featureActions.createNewEvent()" class="btn">Create New Event</button>
+                    <button onclick="featureActions.showMyRegistrations()" class="btn btn-outline">My Registrations</button>
+                    <button onclick="featureActions.showEventAnalytics()" class="btn btn-outline">Event Analytics</button>
+                </div>
             </div>
         </section>
 
@@ -1672,259 +1715,253 @@
 
     <!-- JavaScript -->
     <script>
-        // Page navigation
-        function showPage(page) {
-            const pages = document.querySelectorAll('.page-container');
-            pages.forEach(p => p.classList.remove('active'));
-            
-            document.getElementById(page).classList.add('active');
-        }
+// Page navigation function
+function showPage(pageName) {
+    console.log('Showing page:', pageName);
+    const pages = document.querySelectorAll('.page-container');
+    pages.forEach(p => p.classList.remove('active'));
+    const targetPage = document.getElementById(pageName);
+    if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+}
 
-        // Show event detail (dummy function)
-        function showEventDetail(eventId) {
-            // Here you would typically fetch and display the event details
-            // For now, we'll just show an alert
-            alert('Show details for event ID: ' + eventId);
-        }
+// Event detail handler
+function showEventDetail(eventId) {
+    alert(`Showing details for event ${eventId}`);
+}
 
-        // Handle login form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Perform login (this is just a placeholder, implement actual login logic)
-            alert('Logging in...');
-            showPage('dashboard');
-        });
+// Modal handler
+function showModal(title, content) {
+    const existingModal = document.querySelector('.modal');
+    if (existingModal) existingModal.remove();
 
-        // Handle signup form submission
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Perform signup (this is just a placeholder, implement actual signup logic)
-            alert('Signing up...');
-            showPage('login');
-        });
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>${title}</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                ${content}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close button handler
+    modal.querySelector('.close-modal').onclick = () => modal.remove();
+    
+    // Close on outside click
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+    };
+}
 
-        // Handle create event form submission
-        document.getElementById('createEventForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Perform event creation (this is just a placeholder, implement actual event creation logic)
-            alert('Event created!');
-            showPage('dashboard');
-        });
-
-        // Feature tabs/buttons functionality
-        const featureActions = {
-            // Calendar Format
-            openCalendarFormat: function() {
-                const calendarData = {
-                    events: [
-                        {
-                            title: 'Kerala Hackathon 2025',
-                            start: '2025-11-15',
-                            end: '2025-11-16'
-                        },
-                    ]
-                };
-                
-                const icsContent = generateICSFile(calendarData);
-                downloadFile('events.ics', icsContent);
-            },
-
-            // Community Interaction
-            showCommunityPanel: function() {
-                const communityPanel = `
-                    <div class="community-panel">
-                        <h2>Community Discussions</h2>
-                        <div class="discussion-threads">
-                            <div class="thread">
-                                <h3>Latest Discussions</h3>
-                                <ul class="thread-list">
-                                    <li>Topic 1: Getting Started with Web Development</li>
-                                    <li>Topic 2: AI/ML Study Group</li>
-                                    <li>Topic 3: Upcoming Hackathon Planning</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                showModal('Community Hub', communityPanel);
-            },
-
-            // Social Media Integration
-            shareSocialMedia: function() {
-                const shareData = {
-                    title: 'Kerala TechConnect',
-                    text: 'Join the largest tech community in Kerala!',
-                    url: window.location.href
-                };
-                
-                if (navigator.share) {
-                    navigator.share(shareData);
-                } else {
-                    const socialLinks = `
-                        <div class="social-share">
-                            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareData.text)}" target="_blank">Share on Twitter</a><br>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}" target="_blank">Share on Facebook</a><br>
-                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareData.url)}" target="_blank">Share on LinkedIn</a>
-                        </div>
-                    `;
-                    showModal('Share', socialLinks);
-                }
-            },
-
-            // Real-Time Updates (string content now)
-            enableRealTimeUpdates: function() {
-                const notificationsHtml = `
-                    <div class="notification-list">
-                        <div class="notification">New event: AI Workshop added</div>
-                        <div class="notification">Event update: Venue changed for Hackathon</div>
-                        <div class="notification">Registration closing soon for Cloud Summit</div>
-                    </div>
-                `;
-                showModal('Real-Time Updates', notificationsHtml);
-            },
-
-            // Search & Filter
-            showSearchFilter: function() {
-                const filterPanel = `
-                    <div class="search-filter-panel">
-                        <input type="text" class="search-input" placeholder="Search events...">
-                        <div class="filters">
-                            <h3>Filter By:</h3>
-                            <div class="filter-group">
-                                <label>Date Range</label>
-                                <input type="date" class="filter-date">
-                            </div>
-                            <div class="filter-group">
-                                <label>Location</label>
-                                <select class="filter-location">
-                                    <option>Kochi</option>
-                                    <option>Trivandrum</option>
-                                    <option>Kozhikode</option>
-                                </select>
-                            </div>
-                            <div class="filter-group">
-                                <label>Event Type</label>
-                                <select class="filter-type">
-                                    <option>All</option>
-                                    <option>Hackathon</option>
-                                    <option>Workshop</option>
-                                    <option>Conference</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                showModal('Search & Filter Events', filterPanel);
-            },
-
-            // Event Management
-            showEventListings: function() {
-                showPage('events');
-            },
-
-            // Organize Events & Create New Event — navigate to page and focus first field
-            organizeEvent: function() {
-                showPage('create-event');
-                setTimeout(()=> {
-                    const input = document.getElementById('eventTitle');
-                    if (input) input.focus();
-                }, 50);
-            },
-
-            createNewEvent: function() {
-                this.organizeEvent();
-            },
-
-            // My Registrations
-            showMyRegistrations: function() {
-                const registrations = `
-                    <div class="registrations-panel">
-                        <h3>Your Registered Events</h3>
-                        <div class="registered-events">
-                            <div class="registered-event">
-                                <h4>Kerala Hackathon 2025</h4>
-                                <p>Date: Nov 15-16, 2025</p>
-                                <button class="btn btn-small" data-action="viewDetail" data-event-id="1">View Details</button>
-                            </div>
-                            <div class="registered-event">
-                                <h4>AI Summit Kerala</h4>
-                                <p>Date: Nov 20, 2025</p>
-                                <button class="btn btn-small" data-action="viewDetail" data-event-id="2">View Details</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                showModal('My Registrations', registrations);
-            },
-
-            // Event Analytics
-            showEventAnalytics: function() {
-                const analytics = `
-                    <div class="analytics-panel">
-                        <h3>Event Performance</h3>
-                        <div class="analytics-cards">
-                            <div class="analytics-card">
-                                <h4>Total Registrations</h4>
-                                <div class="stat">150</div>
-                            </div>
-                            <div class="analytics-card">
-                                <h4>Event Views</h4>
-                                <div class="stat">1,200</div>
-                            </div>
-                            <div class="analytics-card">
-                                <h4>Engagement Rate</h4>
-                                <div class="stat">12.5%</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                showModal('Event Analytics', analytics);
-            }
+// Feature tabs/buttons functionality
+const featureActions = {
+    // Calendar Format
+    openCalendarFormat: function() {
+        const calendarData = {
+            events: [
+                {
+                    title: 'Kerala Hackathon 2025',
+                    start: '2025-11-15',
+                    end: '2025-11-16'
+                },
+                // Add more events here
+            ]
         };
+        
+        // Generate and download .ics file
+        const icsContent = generateICSFile(calendarData);
+        downloadFile('events.ics', icsContent);
+    },
 
-        // Helper function to show modal (accepts string or Node)
-        function showModal(title, content) {
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            const modalInner = document.createElement('div');
-            modalInner.className = 'modal-content';
-            modalInner.innerHTML = `
-                <div class="modal-header">
-                    <h2>${title}</h2>
-                    <button class="close-modal">&times;</button>
+    // Community Interaction
+    showCommunityPanel: function() {
+        const communityPanel = `
+            <div class="community-panel">
+                <h2>Community Discussions</h2>
+                <div class="discussion-threads">
+                    <div class="thread">
+                        <h3>Latest Discussions</h3>
+                        <ul class="thread-list">
+                            <li>Topic 1: Getting Started with Web Development</li>
+                            <li>Topic 2: AI/ML Study Group</li>
+                            <li>Topic 3: Upcoming Hackathon Planning</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="modal-body"></div>
+            </div>
+        `;
+        showModal('Community Hub', communityPanel);
+    },
+
+    // Social Media Integration
+    shareSocialMedia: function() {
+        const shareData = {
+            title: 'Kerala TechConnect',
+            text: 'Join the largest tech community in Kerala!',
+            url: window.location.href
+        };
+        
+        if (navigator.share) {
+            navigator.share(shareData);
+        } else {
+            const socialLinks = `
+                <div class="social-share">
+                    <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareData.text)}" target="_blank">Share on Twitter</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}" target="_blank">Share on Facebook</a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareData.url)}" target="_blank">Share on LinkedIn</a>
+                </div>
             `;
-            modal.appendChild(modalInner);
-
-            const body = modalInner.querySelector('.modal-body');
-            if (typeof content === 'string') {
-                body.innerHTML = content;
-            } else if (content instanceof Node) {
-                body.appendChild(content);
-            }
-
-            document.body.appendChild(modal);
-
-            modalInner.querySelector('.close-modal').onclick = function(e) {
-                e.preventDefault();
-                modal.remove();
-            };
-
-            // delegate clicks inside modal (e.g. View Details buttons)
-            modal.addEventListener('click', function(e) {
-                const btn = e.target.closest('[data-action="viewDetail"]');
-                if (btn) {
-                    const id = btn.getAttribute('data-event-id');
-                    if (id) showEventDetail(id);
-                }
-            });
+            showModal('Share', socialLinks);
         }
+    },
 
-        // Helper function to generate ICS file
-        function generateICSFile(data) {
-            // Simple ICS file generation
-            return `BEGIN:VCALENDAR
+    // Real-Time Updates
+    enableRealTimeUpdates: function() {
+        // Simulated real-time updates
+        const notifications = document.createElement('div');
+        notifications.className = 'notifications-panel';
+        notifications.innerHTML = `
+            <div class="notification-list">
+                <div class="notification">New event: AI Workshop added</div>
+                <div class="notification">Event update: Venue changed for Hackathon</div>
+                <div class="notification">Registration closing soon for Cloud Summit</div>
+            </div>
+        `;
+        showModal('Real-Time Updates', notifications);
+    },
+
+    // Search & Filter
+    showSearchFilter: function() {
+        const filterPanel = `
+            <div class="search-filter-panel">
+                <input type="text" class="search-input" placeholder="Search events...">
+                <div class="filters">
+                    <h3>Filter By:</h3>
+                    <div class="filter-group">
+                        <label>Date Range</label>
+                        <input type="date" class="filter-date">
+                    </div>
+                    <div class="filter-group">
+                        <label>Location</label>
+                        <select class="filter-location">
+                            <option>Kochi</option>
+                            <option>Trivandrum</option>
+                            <option>Kozhikode</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Event Type</label>
+                        <select class="filter-type">
+                            <option>All</option>
+                            <option>Hackathon</option>
+                            <option>Workshop</option>
+                            <option>Conference</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        `;
+        showModal('Search & Filter Events', filterPanel);
+    },
+
+    // Event Management
+    showEventListings: function() {
+        showPage('events');
+    },
+
+    // Organize Events
+    organizeEvent: function() {
+        showPage('create-event');
+    },
+
+    // Create New Event
+    createNewEvent: function() {
+        showPage('create-event');
+    },
+
+    // My Registrations
+    showMyRegistrations: function() {
+        const registrations = `
+            <div class="registrations-panel">
+                <h3>Your Registered Events</h3>
+                <div class="registered-events">
+                    <div class="registered-event">
+                        <h4>Kerala Hackathon 2025</h4>
+                        <p>Date: Nov 15-16, 2025</p>
+                        <button class="btn btn-small">View Details</button>
+                    </div>
+                    <div class="registered-event">
+                        <h4>AI Summit Kerala</h4>
+                        <p>Date: Nov 20, 2025</p>
+                        <button class="btn btn-small">View Details</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        showModal('My Registrations', registrations);
+    },
+
+    // Event Analytics
+    showEventAnalytics: function() {
+        const analytics = `
+            <div class="analytics-panel">
+                <h3>Event Performance</h3>
+                <div class="analytics-cards">
+                    <div class="analytics-card">
+                        <h4>Total Registrations</h4>
+                        <div class="stat">150</div>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Event Views</h4>
+                        <div class="stat">1,200</div>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Engagement Rate</h4>
+                        <div class="stat">12.5%</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        showModal('Event Analytics', analytics);
+    }
+};
+
+// Helper function to show modal
+function showModal(title, content) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>${title}</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                ${content}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.querySelector('.close-modal').onclick = function() {
+        modal.remove();
+    };
+}
+
+// Helper function to generate ICS file
+function generateICSFile(data) {
+    // Simple ICS file generation
+    return `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Kerala TechConnect//Events Calendar//EN
 ${data.events.map(event => `BEGIN:VEVENT
@@ -1933,53 +1970,32 @@ DTSTART:${event.start.replace(/-/g, '')}
 DTEND:${event.end.replace(/-/g, '')}
 END:VEVENT`).join('\n')}
 END:VCALENDAR`;
-        }
+}
 
-        // Helper function to download file
-        function downloadFile(filename, content) {
-            const element = document.createElement('a');
-            element.setAttribute('href', 'data:text/calendar;charset=utf-8,' + encodeURIComponent(content));
-            element.setAttribute('download', filename);
-            element.style.display = 'none';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-        }
+// Helper function to download file
+function downloadFile(filename, content) {
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/calendar;charset=utf-8,' + encodeURIComponent(content));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
 
-        // Add event listeners to buttons and make keyboard accessible
-        document.addEventListener('DOMContentLoaded', function() {
-            // Attach click handlers to all elements with data-feature (anchors, divs, buttons)
-            function bindFeatureElements(root = document) {
-                const elements = root.querySelectorAll('[data-feature]');
-                elements.forEach(el => {
-                    // avoid double-binding
-                    if (el.__featureBound) return;
-                    el.__featureBound = true;
-
-                    el.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const feature = this.getAttribute('data-feature');
-                        if (feature && featureActions[feature]) {
-                            featureActions[feature]();
-                        }
-                    });
-
-                    // keyboard support for non-button elements
-                    el.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            this.click();
-                        }
-                    });
-                });
+// Add event listeners to buttons
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach click handlers to all feature buttons
+    const buttons = document.querySelectorAll('[data-feature]');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const feature = this.getAttribute('data-feature');
+            if (featureActions[feature]) {
+                featureActions[feature]();
             }
-
-            bindFeatureElements();
-
-            // also bind feature elements that may be added later (simple MutationObserver)
-            const observer = new MutationObserver(() => bindFeatureElements());
-            observer.observe(document.body, { childList: true, subtree: true });
         });
+    });
+});
     </script>
 </body>
 </html>
